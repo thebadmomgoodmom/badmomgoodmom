@@ -1,472 +1,330 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bad Mom / Good Mom — Every mom is both. Every single day.</title>
-    <meta name="description" content="Stick figure truths about motherhood. Funny memes, relatable moments, and the honest chaos of being a mom.">
-    <meta property="og:title" content="Bad Mom / Good Mom">
-    <meta property="og:description" content="Stick figure truths about motherhood. Every mom is both. Every single day.">
-    <meta property="og:type" content="website">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --coral: #FF6B6B;
-            --coral-light: #FFE0E0;
-            --coral-dark: #E85555;
-            --black: #1a1a1a;
-            --gray: #666;
-            --light-gray: #f8f7f5;
-            --white: #ffffff;
-            --hand-font: 'Caveat', cursive;
-            --body-font: 'DM Sans', sans-serif;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--body-font); color: var(--black); background: var(--white); overflow-x: hidden; }
-
-        .hero {
-            min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; padding: 2rem; position: relative; background: var(--white);
-        }
-        .hero::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 20% 30%, var(--coral-light) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 70%, #fff0f0 0%, transparent 40%);
-            opacity: 0.5; z-index: 0;
-        }
-        .hero-content { position: relative; z-index: 1; max-width: 720px; }
-        .stick-figure-container { display: flex; align-items: flex-end; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
-        .stick-figure-container svg { width: 120px; height: auto; }
-        .hero h1 { font-family: var(--hand-font); font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 700; line-height: 1; margin-bottom: 0.5rem; letter-spacing: -1px; }
-        .hero h1 .good { color: var(--black); }
-        .hero h1 .slash { color: var(--gray); font-weight: 400; }
-        .hero h1 .bad { color: var(--coral); }
-        .hero h1 .mom { color: var(--black); }
-        .hero .tagline { font-family: var(--hand-font); font-size: clamp(1.3rem, 3vw, 1.8rem); color: var(--gray); margin-bottom: 2.5rem; font-weight: 400; }
-        .hero .tagline em { color: var(--coral); font-style: normal; }
-
-        /* MAILCHIMP FORM */
-        .email-form { display: flex; gap: 0.5rem; max-width: 460px; margin: 0 auto 1.5rem; }
-        .email-form input[type="email"] {
-            flex: 1; padding: 0.9rem 1.2rem; border: 2px solid #ddd; border-radius: 50px;
-            font-family: var(--body-font); font-size: 1rem; outline: none; transition: border-color 0.3s;
-        }
-        .email-form input[type="email"]:focus { border-color: var(--coral); }
-        .email-form button, .email-form input[type="submit"] {
-            padding: 0.9rem 1.8rem; background: var(--coral); color: white; border: none; border-radius: 50px;
-            font-family: var(--body-font); font-size: 1rem; font-weight: 500; cursor: pointer;
-            transition: background 0.3s, transform 0.2s; white-space: nowrap;
-        }
-        .email-form button:hover, .email-form input[type="submit"]:hover { background: var(--coral-dark); transform: translateY(-1px); }
-        .form-note { font-size: 0.85rem; color: var(--gray); }
-        .form-success { display: none; font-family: var(--hand-font); font-size: 1.3rem; color: var(--coral); margin-bottom: 1rem; }
-        /* Hide mailchimp honeypot */
-        .mc-honeypot { position: absolute; left: -5000px; }
-
-        .social-links { display: flex; gap: 1.2rem; justify-content: center; margin-top: 2rem; }
-        .social-links a {
-            display: flex; align-items: center; justify-content: center; width: 44px; height: 44px;
-            border-radius: 50%; background: var(--light-gray); color: var(--black); text-decoration: none;
-            transition: background 0.3s, transform 0.2s;
-        }
-        .social-links a:hover { background: var(--coral-light); transform: translateY(-2px); }
-
-        .scroll-hint {
-            position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-            z-index: 1; animation: bounce 2s infinite; color: var(--gray); font-size: 0.85rem; text-align: center;
-        }
-        .scroll-hint svg { display: block; margin: 0.3rem auto 0; }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-8px); }
-            60% { transform: translateX(-50%) translateY(-4px); }
-        }
-
-        .section { padding: 5rem 2rem; }
-        .section-title { font-family: var(--hand-font); font-size: clamp(2rem, 5vw, 3rem); text-align: center; margin-bottom: 0.5rem; }
-        .section-subtitle { text-align: center; color: var(--gray); margin-bottom: 3rem; font-size: 1.05rem; }
-
-        .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
-        .meme-card {
-            background: var(--white); border: 2px solid #eee; border-radius: 16px;
-            overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .meme-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
-        .meme-card .card-image {
-            aspect-ratio: 1; background: var(--light-gray); display: flex;
-            align-items: center; justify-content: center; padding: 2rem;
-        }
-        .meme-card .card-image svg { width: 100%; max-width: 280px; height: auto; }
-        .meme-card .card-text { padding: 1.5rem; }
-        .meme-card .card-label {
-            display: inline-block; font-family: var(--hand-font); font-size: 0.95rem;
-            padding: 0.2rem 0.8rem; border-radius: 20px; margin-bottom: 0.5rem;
-        }
-        .meme-card .card-label.good { background: #e8f5e9; color: #2e7d32; }
-        .meme-card .card-label.bad { background: var(--coral-light); color: var(--coral-dark); }
-        .meme-card .card-label.math { background: #e3f2fd; color: #1565c0; }
-        .meme-card .card-joke { font-family: var(--hand-font); font-size: 1.35rem; line-height: 1.4; color: var(--black); }
-
-        .quiz-section { background: var(--light-gray); text-align: center; }
-        .quiz-box {
-            max-width: 600px; margin: 0 auto; padding: 3rem 2rem;
-            background: var(--white); border-radius: 24px; box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-        }
-        .quiz-box .quiz-emoji { font-size: 3rem; margin-bottom: 1rem; }
-        .quiz-box h2 { font-family: var(--hand-font); font-size: 2.2rem; margin-bottom: 0.5rem; }
-        .quiz-box p { color: var(--gray); margin-bottom: 2rem; font-size: 1.05rem; line-height: 1.6; }
-        .quiz-btn {
-            display: inline-block; padding: 1rem 2.5rem; background: var(--coral); color: white;
-            border: none; border-radius: 50px; font-family: var(--hand-font); font-size: 1.4rem;
-            cursor: pointer; transition: background 0.3s, transform 0.2s; text-decoration: none;
-        }
-        .quiz-btn:hover { background: var(--coral-dark); transform: translateY(-2px); }
-
-        .about-section { max-width: 680px; margin: 0 auto; }
-        .about-section .about-text { font-family: var(--hand-font); font-size: 1.4rem; line-height: 1.7; color: var(--black); }
-        .about-section .about-text .highlight { color: var(--coral); }
-
-        footer { background: var(--black); color: #aaa; text-align: center; padding: 3rem 2rem; }
-        footer .footer-logo { font-family: var(--hand-font); font-size: 1.8rem; color: white; margin-bottom: 0.5rem; }
-        footer .footer-logo .bad { color: var(--coral); }
-        footer p { font-size: 0.85rem; margin-bottom: 1rem; }
-        footer .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
-        footer .footer-links a { color: #aaa; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
-        footer .footer-links a:hover { color: var(--coral); }
-
-        .quiz-modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center; padding: 1rem;
-        }
-        .quiz-modal-overlay.active { display: flex; }
-        .quiz-modal {
-            background: white; border-radius: 24px; max-width: 520px; width: 100%;
-            padding: 2.5rem; position: relative; max-height: 90vh; overflow-y: auto;
-        }
-        .quiz-close { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--gray); }
-        .quiz-question { font-family: var(--hand-font); font-size: 1.6rem; margin-bottom: 1.5rem; line-height: 1.3; }
-        .quiz-progress { font-size: 0.85rem; color: var(--gray); margin-bottom: 0.5rem; }
-        .quiz-option {
-            display: block; width: 100%; padding: 1rem 1.2rem; margin-bottom: 0.8rem;
-            border: 2px solid #eee; border-radius: 12px; background: white;
-            font-family: var(--body-font); font-size: 1rem; cursor: pointer; text-align: left;
-            transition: border-color 0.2s, background 0.2s;
-        }
-        .quiz-option:hover { border-color: var(--coral); background: #fff8f8; }
-        .quiz-result { text-align: center; }
-        .quiz-result .result-pct { font-family: var(--hand-font); font-size: 4rem; color: var(--coral); margin-bottom: 0.5rem; }
-        .quiz-result .result-title { font-family: var(--hand-font); font-size: 1.8rem; margin-bottom: 1rem; }
-        .quiz-result .result-desc { color: var(--gray); line-height: 1.6; margin-bottom: 1.5rem; }
-        .quiz-result .share-btn {
-            display: inline-block; padding: 0.8rem 2rem; background: var(--coral); color: white;
-            border: none; border-radius: 50px; font-family: var(--body-font); font-size: 1rem;
-            cursor: pointer; transition: background 0.3s; margin: 0.3rem;
-        }
-        .quiz-result .share-btn:hover { background: var(--coral-dark); }
-
-        /* WEEK INDICATOR */
-        .week-label { text-align: center; color: var(--gray); font-size: 0.9rem; margin-bottom: 2rem; }
-
-        @media (max-width: 600px) {
-            .email-form { flex-direction: column; }
-            .email-form input[type="submit"] { width: 100%; }
-            .stick-figure-container svg { width: 80px; }
-            .content-grid { grid-template-columns: 1fr; }
-        }
-        .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-        .fade-up.visible { opacity: 1; transform: translateY(0); }
-    </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bad Mom / Good Mom</title>
+<meta name="description" content="Stick figure truths about motherhood. Every mom is both. Every single day.">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{--c:#FF6B6B;--cl:#FFE0E0;--cd:#E85555;--bk:#1a1a1a;--gy:#666;--lg:#f8f7f5;--w:#fff;--hf:'Caveat',cursive;--bf:'DM Sans',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:var(--bf);color:var(--bk);background:var(--w);overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-bottom:1px solid #eee;padding:12px 24px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--hf);font-size:22px;font-weight:700;color:var(--bk);text-decoration:none;cursor:pointer}.nav-logo .bad{color:var(--c)}
+.nav-links{display:flex;gap:24px;align-items:center}.nav-links a{font-size:14px;color:var(--gy);text-decoration:none;font-weight:500;cursor:pointer;transition:color .3s}.nav-links a:hover,.nav-links a.active{color:var(--c)}
+.nav-cta{background:var(--c);color:white!important;padding:6px 16px;border-radius:50px;font-size:13px!important}.hamburger{display:none;background:none;border:none;font-size:24px;cursor:pointer;color:var(--bk)}
+@media(max-width:640px){.nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:white;flex-direction:column;padding:16px 24px;border-bottom:1px solid #eee;gap:16px}.nav-links.open{display:flex}.hamburger{display:block}}
+.page{display:none}.page.active{display:block}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 40px;position:relative}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 20% 30%,var(--cl) 0%,transparent 50%),radial-gradient(circle at 80% 70%,#fff0f0 0%,transparent 40%);opacity:.5;z-index:0}
+.hero-content{position:relative;z-index:1;max-width:720px}.sticks{display:flex;align-items:flex-end;justify-content:center;gap:1rem;margin-bottom:2rem}.sticks svg{width:120px;height:auto}
+.hero h1{font-family:var(--hf);font-size:clamp(3rem,8vw,5.5rem);font-weight:700;line-height:1;margin-bottom:.5rem}.hero h1 .bad{color:var(--c)}.hero h1 .sl{color:var(--gy);font-weight:400}
+.hero .tag{font-family:var(--hf);font-size:clamp(1.3rem,3vw,1.8rem);color:var(--gy);margin-bottom:2.5rem}.hero .tag em{color:var(--c);font-style:normal}
+.ef{display:flex;gap:.5rem;max-width:460px;margin:0 auto 1.5rem}.ef input[type=email]{flex:1;padding:.9rem 1.2rem;border:2px solid #ddd;border-radius:50px;font-family:var(--bf);font-size:1rem;outline:none}.ef input[type=email]:focus{border-color:var(--c)}
+.ef input[type=submit]{padding:.9rem 1.8rem;background:var(--c);color:white;border:none;border-radius:50px;font-family:var(--bf);font-size:1rem;font-weight:500;cursor:pointer;white-space:nowrap}.ef input[type=submit]:hover{background:var(--cd)}
+.fn{font-size:.85rem;color:var(--gy)}.mch{position:absolute;left:-5000px}
+.sl2{display:flex;gap:1.2rem;justify-content:center;margin-top:2rem}.sl2 a{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--lg);color:var(--bk);text-decoration:none;transition:background .3s,transform .2s}.sl2 a:hover{background:var(--cl);transform:translateY(-2px)}
+.sec{padding:80px 24px 60px}.st{font-family:var(--hf);font-size:clamp(2rem,5vw,3rem);text-align:center;margin-bottom:.5rem}.ss{text-align:center;color:var(--gy);margin-bottom:3rem;font-size:1.05rem}
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;max-width:1000px;margin:0 auto}
+.mc{background:var(--w);border:2px solid #eee;border-radius:16px;overflow:hidden;transition:transform .3s,box-shadow .3s}.mc:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.08)}
+.mc .ct{padding:1.2rem}.mc .cl{display:inline-block;font-family:var(--hf);font-size:.95rem;padding:.2rem .8rem;border-radius:20px;margin-bottom:.5rem}
+.cl.bad{background:var(--cl);color:var(--cd)}.cl.good{background:#e8f5e9;color:#2e7d32}.cl.math{background:#e3f2fd;color:#1565c0}
+.mc .cj{font-family:var(--hf);font-size:1.3rem;line-height:1.4}
+.sab{display:block;margin:2.5rem auto 0;padding:.8rem 2rem;background:none;border:2px solid var(--c);color:var(--c);border-radius:50px;font-family:var(--bf);font-size:1rem;cursor:pointer;transition:all .3s;text-align:center;width:fit-content}.sab:hover{background:var(--c);color:white}
+.qs{background:var(--lg);text-align:center}.qb{max-width:600px;margin:0 auto;padding:3rem 2rem;background:var(--w);border-radius:24px;box-shadow:0 4px 24px rgba(0,0,0,.06)}
+.qb .qe{font-size:3rem;margin-bottom:1rem}.qb h2{font-family:var(--hf);font-size:2.2rem;margin-bottom:.5rem}.qb p{color:var(--gy);margin-bottom:2rem;font-size:1.05rem;line-height:1.6}
+.qbtn{display:inline-block;padding:1rem 2.5rem;background:var(--c);color:white;border:none;border-radius:50px;font-family:var(--hf);font-size:1.4rem;cursor:pointer}.qbtn:hover{background:var(--cd)}
+.gg{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.5rem;max-width:1100px;margin:0 auto}
+.gi{border-radius:16px;overflow:hidden;border:2px solid #eee;transition:transform .3s,box-shadow .3s}.gi:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.gi .ic{padding:12px 16px;font-family:var(--hf);font-size:1.1rem;color:var(--bk)}
+.gf{display:flex;gap:10px;justify-content:center;margin-bottom:2rem;flex-wrap:wrap}
+.fb{padding:6px 18px;border-radius:50px;border:2px solid #eee;background:white;font-family:var(--bf);font-size:.9rem;cursor:pointer;transition:all .3s}.fb:hover,.fb.active{border-color:var(--c);background:var(--cl);color:var(--cd)}
+.vg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2rem;max-width:1100px;margin:0 auto}
+.vc{border-radius:16px;overflow:hidden;border:2px solid #eee;transition:transform .3s,box-shadow .3s}.vc:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.vt{width:100%;aspect-ratio:9/16;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.po{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;background:rgba(255,107,107,.9);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.po::after{content:'';width:0;height:0;border-top:12px solid transparent;border-bottom:12px solid transparent;border-left:20px solid white;margin-left:4px}
+.vc .ci{padding:16px}.vc .cti{font-family:var(--hf);font-size:1.3rem;margin-bottom:4px}.vc .cde{font-size:.9rem;color:var(--gy)}
+footer{background:var(--bk);color:#aaa;text-align:center;padding:3rem 2rem}footer .fl{font-family:var(--hf);font-size:1.8rem;color:white;margin-bottom:.5rem}footer .fl .bad{color:var(--c)}footer p{font-size:.85rem;margin-bottom:1rem}
+footer .flinks{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}footer .flinks a{color:#aaa;text-decoration:none;font-size:.9rem;transition:color .3s}footer .flinks a:hover{color:var(--c)}
+.qmo{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center;padding:1rem}.qmo.active{display:flex}
+.qm{background:white;border-radius:24px;max-width:520px;width:100%;padding:2.5rem;position:relative;max-height:90vh;overflow-y:auto}
+.qcl{position:absolute;top:1rem;right:1.2rem;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--gy)}
+.qq{font-family:var(--hf);font-size:1.6rem;margin-bottom:1.5rem;line-height:1.3}.qp{font-size:.85rem;color:var(--gy);margin-bottom:.5rem}
+.qo{display:block;width:100%;padding:1rem 1.2rem;margin-bottom:.8rem;border:2px solid #eee;border-radius:12px;background:white;font-family:var(--bf);font-size:1rem;cursor:pointer;text-align:left;transition:border-color .2s,background .2s}.qo:hover{border-color:var(--c);background:#fff8f8}
+.qr{text-align:center}.qr .rp{font-family:var(--hf);font-size:4rem;color:var(--c)}.qr .rti{font-family:var(--hf);font-size:1.8rem;margin-bottom:1rem}.qr .rd{color:var(--gy);line-height:1.6;margin-bottom:1.5rem}
+.qr .sb{display:inline-block;padding:.8rem 2rem;background:var(--c);color:white;border:none;border-radius:50px;font-size:1rem;cursor:pointer;margin:.3rem}
+.fu{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}.fu.visible{opacity:1;transform:translateY(0)}
+@media(max-width:600px){.ef{flex-direction:column}.ef input[type=submit]{width:100%}.sticks svg{width:80px}.gg{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem}}
+</style>
 </head>
 <body>
+<nav>
+<a class="nav-logo" onclick="showPage('home')"><span class="bad">Bad</span> Mom / Good Mom</a>
+<button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+<div class="nav-links">
+<a onclick="showPage('home')" class="active" id="nav-home">Home</a>
+<a onclick="showPage('memes')" id="nav-memes">Memes</a>
+<a onclick="showPage('videos')" id="nav-videos">Videos</a>
+<a href="https://www.instagram.com/thebadmomgoodmom/" target="_blank" class="nav-cta">Follow Us</a>
+</div></nav>
 
-    <section class="hero">
-        <div class="hero-content">
-            <div class="stick-figure-container">
-                <svg viewBox="0 0 100 180" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M34 28 L30 12" stroke="#FF6B6B" stroke-width="3" stroke-linecap="round"/>
-                    <path d="M66 28 L70 12" stroke="#FF6B6B" stroke-width="3" stroke-linecap="round"/>
-                    <circle cx="50" cy="40" r="16" fill="none" stroke="#1a1a1a" stroke-width="3"/>
-                    <circle cx="44" cy="37" r="2" fill="#1a1a1a"/><circle cx="56" cy="37" r="2" fill="#1a1a1a"/>
-                    <path d="M42 47 Q50 44 58 47" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
-                    <line x1="50" y1="56" x2="50" y2="110" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
-                    <line x1="50" y1="70" x2="28" y2="95" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
-                    <line x1="50" y1="70" x2="78" y2="85" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
-                    <line x1="50" y1="110" x2="30" y2="155" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
-                    <line x1="50" y1="110" x2="70" y2="155" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
-                    <rect x="72" y="76" width="12" height="18" rx="2" fill="none" stroke="#FF6B6B" stroke-width="2"/>
-                    <rect x="75" y="79" width="6" height="10" rx="1" fill="#FF6B6B" opacity="0.3"/>
-                </svg>
-                <svg viewBox="0 0 100 180" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="50" cy="18" rx="18" ry="5" fill="none" stroke="#FFD700" stroke-width="2.5" transform="rotate(-10, 50, 18)"/>
-                    <circle cx="50" cy="40" r="16" fill="none" stroke="#1a1a1a" stroke-width="3"/>
-                    <circle cx="44" cy="37" r="2" fill="#1a1a1a"/><circle cx="56" cy="37" r="2" fill="#1a1a1a"/>
-                    <path d="M43 46 Q50 52 57 46" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
-                    <line x1="50" y1="56" x2="50" y2="110" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
-                    <line x1="50" y1="70" x2="25" y2="90" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
-                    <line x1="50" y1="70" x2="75" y2="90" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
-                    <line x1="50" y1="110" x2="30" y2="155" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
-                    <line x1="50" y1="110" x2="70" y2="155" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
-                    <rect x="12" y="82" width="14" height="16" rx="2" fill="none" stroke="#FF6B6B" stroke-width="2"/>
-                    <path d="M26 87 Q32 87 32 93 Q32 98 26 98" fill="none" stroke="#FF6B6B" stroke-width="2"/>
-                    <path d="M14 80 Q19 74 24 80" fill="none" stroke="#FF6B6B" stroke-width="1.5" opacity="0.5"/>
-                </svg>
-            </div>
+<div class="page active" id="page-home">
+<section class="hero"><div class="hero-content">
+<div class="sticks">
+<svg viewBox="0 0 100 180" xmlns="http://www.w3.org/2000/svg"><path d="M34 28 L30 12" stroke="#FF6B6B" stroke-width="3" stroke-linecap="round"/><path d="M66 28 L70 12" stroke="#FF6B6B" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="40" r="16" fill="none" stroke="#1a1a1a" stroke-width="3"/><circle cx="44" cy="37" r="2" fill="#1a1a1a"/><circle cx="56" cy="37" r="2" fill="#1a1a1a"/><path d="M42 47 Q50 44 58 47" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/><line x1="50" y1="56" x2="50" y2="110" stroke="#1a1a1a" stroke-width="3"/><line x1="50" y1="70" x2="28" y2="95" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/><line x1="50" y1="70" x2="78" y2="85" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/><line x1="50" y1="110" x2="30" y2="155" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/><line x1="50" y1="110" x2="70" y2="155" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/><rect x="72" y="76" width="12" height="18" rx="2" fill="none" stroke="#FF6B6B" stroke-width="2"/><rect x="75" y="79" width="6" height="10" rx="1" fill="#FF6B6B" opacity="0.3"/></svg>
+<svg viewBox="0 0 100 180" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="18" rx="18" ry="5" fill="none" stroke="#FFD700" stroke-width="2.5" transform="rotate(-10,50,18)"/><circle cx="50" cy="40" r="16" fill="none" stroke="#1a1a1a" stroke-width="3"/><circle cx="44" cy="37" r="2" fill="#1a1a1a"/><circle cx="56" cy="37" r="2" fill="#1a1a1a"/><path d="M43 46 Q50 52 57 46" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/><line x1="50" y1="56" x2="50" y2="110" stroke="#1a1a1a" stroke-width="3"/><line x1="50" y1="70" x2="25" y2="90" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/><line x1="50" y1="70" x2="75" y2="90" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/><line x1="50" y1="110" x2="30" y2="155" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/><line x1="50" y1="110" x2="70" y2="155" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/><rect x="12" y="82" width="14" height="16" rx="2" fill="none" stroke="#FF6B6B" stroke-width="2"/><path d="M26 87 Q32 87 32 93 Q32 98 26 98" fill="none" stroke="#FF6B6B" stroke-width="2"/><path d="M14 80 Q19 74 24 80" fill="none" stroke="#FF6B6B" stroke-width="1.5" opacity="0.5"/></svg>
+</div>
+<h1><span class="bad">Bad</span> Mom <span class="sl">/</span> Good Mom</h1>
+<p class="tag">Every mom is <em>both</em>. Every single day.</p>
+<form class="ef" action="https://badmomgoodmom.us9.list-manage.com/subscribe/post?u=0525154a5c85621fa33956bb1&amp;id=653e27b263&amp;f_id=003751e1f0" method="post" target="_blank">
+<input type="email" name="EMAIL" placeholder="your@email.com" required>
+<div class="mch" aria-hidden="true"><input type="text" name="b_0525154a5c85621fa33956bb1_653e27b263" tabindex="-1" value=""></div>
+<input type="submit" value="Join the chaos">
+</form>
+<p class="fn">Free weekly laughs. No spam. Pinky promise.</p>
+<div class="sl2">
+<a href="https://www.instagram.com/thebadmomgoodmom/" target="_blank" title="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
+<a href="https://www.tiktok.com/@thebadmomgoodmom" target="_blank" title="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.18 8.18 0 004.77 1.52V6.84a4.84 4.84 0 01-1-.15z"/></svg></a>
+<a href="https://www.facebook.com/profile.php?id=61582152308141" target="_blank" title="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+<a href="https://www.youtube.com/channel/UCWQyuY7a8gg6KCaP0tCnv4Q" target="_blank" title="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98" fill="currentColor" stroke="none"/></svg></a>
+</div></div></section>
 
-            <h1><span class="bad">Bad</span> <span class="mom">Mom</span> <span class="slash">/</span> <span class="good">Good</span> <span class="mom">Mom</span></h1>
-            <p class="tagline">Every mom is <em>both</em>. Every single day.</p>
+<section class="sec">
+<h2 class="st fu">Latest Laughs</h2><p class="ss fu">Fresh stick figure truths. Tag a mom.</p>
+<div class="fg">
+<!-- FEATURED 1 --><div class="mc fu"><div style="aspect-ratio:1;background:var(--lg);display:flex;align-items:center;justify-content:center;padding:1.5rem"><svg viewBox="0 0 280 280" style="max-width:260px" xmlns="http://www.w3.org/2000/svg"><rect x="160" y="60" width="80" height="120" rx="4" fill="none" stroke="#1a1a1a" stroke-width="2.5"/><line x1="200" y1="60" x2="200" y2="180" stroke="#1a1a1a" stroke-width="2"/><circle cx="190" cy="120" r="3" fill="#1a1a1a"/><circle cx="210" cy="120" r="3" fill="#1a1a1a"/><rect x="202" y="62" width="36" height="56" fill="#FFD700" opacity="0.15"/><circle cx="110" cy="90" r="14" fill="none" stroke="#1a1a1a" stroke-width="2.5"/><circle cx="105" cy="87" r="1.5" fill="#1a1a1a"/><circle cx="115" cy="87" r="1.5" fill="#1a1a1a"/><path d="M105 96 Q110 100 115 96" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/><line x1="110" y1="104" x2="110" y2="155" stroke="#1a1a1a" stroke-width="2.5"/><line x1="110" y1="120" x2="85" y2="140" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><line x1="110" y1="120" x2="158" y2="110" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><line x1="110" y1="155" x2="90" y2="195" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><line x1="110" y1="155" x2="130" y2="195" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><rect x="72" y="134" width="18" height="10" rx="2" fill="#FF6B6B" opacity="0.7"/><circle cx="40" cy="40" r="15" fill="#FFD700" opacity="0.3"/><circle cx="46" cy="36" r="13" fill="white"/><text x="140" y="240" font-family="Caveat,cursive" font-size="18" fill="#666" text-anchor="middle">11:47 PM</text></svg></div><div class="ct"><span class="cl bad">Bad Mom Moment</span><p class="cj">Eating the kids' Halloween candy at midnight. It's called "quality control."</p></div></div>
+<!-- FEATURED 2 --><div class="mc fu"><div style="aspect-ratio:1;background:var(--lg);display:flex;align-items:center;justify-content:center;padding:1.5rem"><svg viewBox="0 0 280 280" style="max-width:260px" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="80" r="14" fill="none" stroke="#1a1a1a" stroke-width="2.5"/><circle cx="95" cy="77" r="1.5" fill="#1a1a1a"/><circle cx="105" cy="77" r="1.5" fill="#1a1a1a"/><ellipse cx="100" cy="88" rx="5" ry="3" fill="none" stroke="#1a1a1a" stroke-width="1.5"/><line x1="100" y1="94" x2="100" y2="145" stroke="#1a1a1a" stroke-width="2.5"/><line x1="100" y1="110" x2="75" y2="130" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><line x1="100" y1="110" x2="140" y2="100" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><line x1="100" y1="145" x2="80" y2="190" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><line x1="100" y1="145" x2="120" y2="190" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><rect x="145" y="40" width="90" height="200" rx="3" fill="#fff8f0" stroke="#1a1a1a" stroke-width="1.5"/><text x="155" y="60" font-family="Caveat,cursive" font-size="11" fill="#1a1a1a">To Do:</text><line x1="155" y1="72" x2="220" y2="72" stroke="#ccc" stroke-width="1"/><line x1="155" y1="86" x2="220" y2="86" stroke="#ccc" stroke-width="1"/><line x1="155" y1="100" x2="220" y2="100" stroke="#ccc" stroke-width="1"/><line x1="155" y1="114" x2="220" y2="114" stroke="#ccc" stroke-width="1"/><line x1="155" y1="128" x2="220" y2="128" stroke="#ccc" stroke-width="1"/><line x1="155" y1="142" x2="220" y2="142" stroke="#ccc" stroke-width="1"/><line x1="155" y1="156" x2="220" y2="156" stroke="#ccc" stroke-width="1"/><line x1="155" y1="170" x2="220" y2="170" stroke="#ccc" stroke-width="1"/><line x1="155" y1="184" x2="220" y2="184" stroke="#ccc" stroke-width="1"/><line x1="155" y1="198" x2="220" y2="198" stroke="#ccc" stroke-width="1"/><path d="M153 69 l3 3 6-6" stroke="#4CAF50" stroke-width="2" fill="none"/><path d="M153 83 l3 3 6-6" stroke="#4CAF50" stroke-width="2" fill="none"/><circle cx="80" cy="72" r="3" fill="#4FC3F7" opacity="0.6"/></svg></div><div class="ct"><span class="cl math">Mom Math</span><p class="cj">To-do list: 47 items. Done: 2. Added since morning: 11.</p></div></div>
+<!-- FEATURED 3 --><div class="mc fu"><div style="aspect-ratio:1;background:var(--lg);display:flex;align-items:center;justify-content:center;padding:1.5rem"><svg viewBox="0 0 280 280" style="max-width:260px" xmlns="http://www.w3.org/2000/svg"><rect x="30" y="140" width="220" height="80" rx="6" fill="none" stroke="#1a1a1a" stroke-width="2"/><rect x="30" y="130" width="220" height="15" rx="3" fill="#FF6B6B" opacity="0.2" stroke="#1a1a1a" stroke-width="1.5"/><ellipse cx="80" cy="130" rx="35" ry="10" fill="#f0f0f0" stroke="#1a1a1a" stroke-width="1.5"/><circle cx="190" cy="115" r="12" fill="none" stroke="#1a1a1a" stroke-width="2"/><circle cx="186" cy="112" r="1.5" fill="#1a1a1a"/><circle cx="194" cy="112" r="1.5" fill="#1a1a1a"/><path d="M186 120 Q190 124 194 120" fill="none" stroke="#1a1a1a" stroke-width="1.5"/><line x1="190" y1="127" x2="190" y2="145" stroke="#1a1a1a" stroke-width="2"/><circle cx="80" cy="108" r="14" fill="none" stroke="#1a1a1a" stroke-width="2.5"/><line x1="73" y1="105" x2="79" y2="105" stroke="#1a1a1a" stroke-width="2"/><line x1="83" y1="105" x2="89" y2="105" stroke="#1a1a1a" stroke-width="2"/><ellipse cx="80" cy="115" rx="3" ry="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/><text x="55" y="85" font-family="Caveat,cursive" font-size="14" fill="#666" opacity="0.4">z</text><text x="45" y="70" font-family="Caveat,cursive" font-size="18" fill="#666" opacity="0.3">z</text><text x="35" y="52" font-family="Caveat,cursive" font-size="22" fill="#666" opacity="0.2">z</text><rect x="100" y="135" width="30" height="22" rx="2" fill="#FF6B6B" opacity="0.3" stroke="#1a1a1a" stroke-width="1.5" transform="rotate(15,115,146)"/><path d="M210 95 Q210 70 240 70 Q260 70 260 85 Q260 100 240 100 L215 100 L210 110 Z" fill="white" stroke="#1a1a1a" stroke-width="1.5"/><text x="225" y="82" font-family="Caveat,cursive" font-size="10" fill="#1a1a1a" text-anchor="middle">Mom?</text><text x="230" y="96" font-family="Caveat,cursive" font-size="10" fill="#1a1a1a" text-anchor="middle">...Mom?</text></svg></div><div class="ct"><span class="cl good">Good Mom Moment</span><p class="cj">Read bedtime stories every night. Fall asleep by page 2. Book on face at 2am.</p></div></div>
+</div>
+<a class="sab" onclick="showPage('memes')">See all memes</a>
+</section>
 
-            <!-- REAL MAILCHIMP FORM -->
-            <div id="formSuccess" class="form-success">Welcome to the chaos! Check your inbox.</div>
-            <form class="email-form" action="https://badmomgoodmom.us9.list-manage.com/subscribe/post?u=0525154a5c85621fa33956bb1&amp;id=653e27b263&amp;f_id=003751e1f0" method="post" target="_blank">
-                <input type="email" name="EMAIL" placeholder="your@email.com" required>
-                <div class="mc-honeypot" aria-hidden="true"><input type="text" name="b_0525154a5c85621fa33956bb1_653e27b263" tabindex="-1" value=""></div>
-                <input type="submit" value="Join the chaos">
-            </form>
-            <p class="form-note">Free weekly laughs. No spam. Pinky promise.</p>
+<section class="sec qs"><div class="qb fu">
+<div class="qe">😈😇</div><h2>What % Good Mom Are You?</h2><p>5 questions. No judgment. Okay, a little judgment.</p>
+<button class="qbtn" onclick="startQuiz()">Take the Quiz</button>
+</div></section>
+</div>
 
-            <!-- REAL SOCIAL LINKS -->
-            <div class="social-links">
-                <a href="https://www.instagram.com/thebadmomgoodmom/" target="_blank" aria-label="Instagram" title="Instagram">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
-                </a>
-                <a href="https://www.tiktok.com/@thebadmomgoodmom" target="_blank" aria-label="TikTok" title="TikTok">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.18 8.18 0 004.77 1.52V6.84a4.84 4.84 0 01-1-.15z"/></svg>
-                </a>
-                <a href="https://www.facebook.com/profile.php?id=61582152308141" target="_blank" aria-label="Facebook" title="Facebook">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-                </a>
-                <a href="https://www.youtube.com/channel/UCWQyuY7a8gg6KCaP0tCnv4Q" target="_blank" aria-label="YouTube" title="YouTube">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
-                </a>
-            </div>
-        </div>
-        <div class="scroll-hint">
-            today's laughs
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
-        </div>
-    </section>
+<div class="page" id="page-memes">
+<section class="sec" style="padding-top:100px">
+<h2 class="st">Meme Gallery</h2><p class="ss">Every stick figure truth we've ever drawn.</p>
+<div class="gf">
+<button class="fb active" onclick="filterMemes('all',this)">All</button>
+<button class="fb" onclick="filterMemes('bad',this)">Bad Mom</button>
+<button class="fb" onclick="filterMemes('good',this)">Good Mom</button>
+<button class="fb" onclick="filterMemes('math',this)">Mom Math</button>
+<button class="fb" onclick="filterMemes('vs',this)">Mom vs Dad</button>
+</div>
+<div class="gg" id="memeGallery">
 
-    <!-- WEEKLY CONTENT - Change these 3 cards each week -->
-    <section class="section" id="content">
-        <h2 class="section-title fade-up">This Week's Laughs</h2>
-        <p class="section-subtitle fade-up">Tag a mom who needs this.</p>
+<!-- ADD NEW MEMES: copy a block, change data-category (bad/good/math/vs), change SVG and caption -->
 
-        <div class="content-grid">
-            <!-- CARD 1 - Replace joke text weekly -->
-            <div class="meme-card fade-up">
-                <div class="card-image">
-                    <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="160" y="60" width="80" height="120" rx="4" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
-                        <line x1="200" y1="60" x2="200" y2="180" stroke="#1a1a1a" stroke-width="2"/>
-                        <circle cx="190" cy="120" r="3" fill="#1a1a1a"/><circle cx="210" cy="120" r="3" fill="#1a1a1a"/>
-                        <rect x="202" y="62" width="36" height="56" fill="#FFD700" opacity="0.15"/>
-                        <circle cx="110" cy="90" r="14" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
-                        <circle cx="105" cy="87" r="1.5" fill="#1a1a1a"/><circle cx="115" cy="87" r="1.5" fill="#1a1a1a"/>
-                        <path d="M105 96 Q110 100 115 96" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
-                        <line x1="110" y1="104" x2="110" y2="155" stroke="#1a1a1a" stroke-width="2.5"/>
-                        <line x1="110" y1="120" x2="85" y2="140" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
-                        <line x1="110" y1="120" x2="158" y2="110" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
-                        <line x1="110" y1="155" x2="90" y2="195" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
-                        <line x1="110" y1="155" x2="130" y2="195" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
-                        <rect x="72" y="134" width="18" height="10" rx="2" fill="#FF6B6B" opacity="0.7"/>
-                        <circle cx="40" cy="40" r="15" fill="#FFD700" opacity="0.3"/>
-                        <circle cx="46" cy="36" r="13" fill="white"/>
-                        <text x="140" y="240" font-family="Caveat, cursive" font-size="18" fill="#666" text-anchor="middle">11:47 PM</text>
-                    </svg>
-                </div>
-                <div class="card-text">
-                    <span class="card-label bad">Bad Mom Moment</span>
-                    <!-- CHANGE THIS JOKE WEEKLY -->
-                    <p class="card-joke">Eating the kids' Halloween candy at midnight. It's called "quality control."</p>
-                </div>
-            </div>
+<!-- 1: Quality Control -->
+<div class="gi" data-category="bad"><div style="aspect-ratio:1;background:var(--lg);display:flex;align-items:center;justify-content:center;padding:.5rem">
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+<rect x="140" y="40" width="60" height="100" rx="3" fill="none" stroke="#1a1a1a" stroke-width="2"/><line x1="170" y1="40" x2="170" y2="140" stroke="#1a1a1a" stroke-width="1.5"/><rect x="172" y="42" width="26" height="44" fill="#FFD700" opacity="0.15"/>
+<circle cx="90" cy="70" r="16" fill="none" stroke="#1a1a1a" stroke-width="2.5"/><circle cx="84" cy="67" r="2" fill="#1a1a1a"/><circle cx="96" cy="67" r="2" fill="#1a1a1a"/><path d="M84 78 Q90 83 96 78" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
+<line x1="90" y1="86" x2="90" y2="135" stroke="#1a1a1a" stroke-width="2.5"/><line x1="90" y1="100" x2="65" y2="118" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><line x1="90" y1="100" x2="138" y2="85" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="52" y="112" width="16" height="10" rx="2" fill="#FF6B6B" opacity="0.6"/>
+<line x1="90" y1="135" x2="72" y2="175" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><line x1="90" y1="135" x2="108" y2="175" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="30" cy="25" r="14" fill="#FFD700" opacity="0.2"/><circle cx="35" cy="22" r="11" fill="white"/>
+<text x="120" y="210" font-family="Caveat,cursive" font-size="16" fill="#666" text-anchor="middle">11:47 PM</text>
+<text x="120" y="232" font-family="Caveat,cursive" font-size="13" fill="#FF6B6B" text-anchor="middle">"quality control"</text>
+</svg></div><div class="ic">Bad Mom: Quality Control</div></div>
 
-            <!-- CARD 2 -->
-            <div class="meme-card fade-up">
-                <div class="card-image">
-                    <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="100" cy="80" r="14" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
-                        <circle cx="95" cy="77" r="1.5" fill="#1a1a1a"/><circle cx="105" cy="77" r="1.5" fill="#1a1a1a"/>
-                        <ellipse cx="100" cy="88" rx="5" ry="3" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
-                        <line x1="100" y1="94" x2="100" y2="145" stroke="#1a1a1a" stroke-width="2.5"/>
-                        <line x1="100" y1="110" x2="75" y2="130" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
-                        <line x1="100" y1="110" x2="140" y2="100" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
-                        <line x1="100" y1="145" x2="80" y2="190" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
-                        <line x1="100" y1="145" x2="120" y2="190" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
-                        <rect x="145" y="40" width="90" height="200" rx="3" fill="#fff8f0" stroke="#1a1a1a" stroke-width="1.5"/>
-                        <text x="155" y="60" font-family="Caveat, cursive" font-size="11" fill="#1a1a1a">To Do:</text>
-                        <line x1="155" y1="72" x2="220" y2="72" stroke="#ccc" stroke-width="1"/>
-                        <line x1="155" y1="86" x2="220" y2="86" stroke="#ccc" stroke-width="1"/>
-                        <line x1="155" y1="100" x2="220" y2="100" stroke="#ccc" stroke-width="1"/>
-                        <line x1="155" y1="114" x2="220" y2="114" stroke="#ccc" stroke-width="1"/>
-                        <line x1="155" y1="128" x2="220" y2="128" stroke="#ccc" stroke-width="1"/>
-                        <line x1="155" y1="142" x2="220" y2="142" stroke="#ccc" stroke-width="1"/>
-                        <line x1="155" y1="156" x2="220" y2="156" stroke="#ccc" stroke-width="1"/>
-                        <line x1="155" y1="170" x2="220" y2="170" stroke="#ccc" stroke-width="1"/>
-                        <line x1="155" y1="184" x2="220" y2="184" stroke="#ccc" stroke-width="1"/>
-                        <line x1="155" y1="198" x2="220" y2="198" stroke="#ccc" stroke-width="1"/>
-                        <line x1="155" y1="212" x2="220" y2="212" stroke="#ccc" stroke-width="1"/>
-                        <line x1="155" y1="226" x2="220" y2="226" stroke="#ccc" stroke-width="1"/>
-                        <path d="M153 69 l3 3 6-6" stroke="#4CAF50" stroke-width="2" fill="none"/>
-                        <path d="M153 83 l3 3 6-6" stroke="#4CAF50" stroke-width="2" fill="none"/>
-                        <circle cx="80" cy="72" r="3" fill="#4FC3F7" opacity="0.6"/>
-                        <circle cx="118" cy="68" r="2" fill="#4FC3F7" opacity="0.6"/>
-                    </svg>
-                </div>
-                <div class="card-text">
-                    <span class="card-label math">Mom Math</span>
-                    <!-- CHANGE THIS JOKE WEEKLY -->
-                    <p class="card-joke">To-do list: 47 items. Items done: 2. Items added since morning: 11.</p>
-                </div>
-            </div>
+<!-- 2: To-Do List -->
+<div class="gi" data-category="math"><div style="aspect-ratio:1;background:var(--lg);display:flex;align-items:center;justify-content:center;padding:.5rem">
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+<circle cx="80" cy="60" r="16" fill="none" stroke="#1a1a1a" stroke-width="2.5"/><circle cx="74" cy="57" r="2" fill="#1a1a1a"/><circle cx="86" cy="57" r="2" fill="#1a1a1a"/><ellipse cx="80" cy="68" rx="5" ry="3" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="80" y1="76" x2="80" y2="130" stroke="#1a1a1a" stroke-width="2.5"/><line x1="80" y1="92" x2="58" y2="108" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><line x1="80" y1="92" x2="115" y2="82" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="80" y1="130" x2="62" y2="168" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><line x1="80" y1="130" x2="98" y2="168" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="62" cy="52" r="3" fill="#4FC3F7" opacity="0.5"/><circle cx="98" cy="48" r="2" fill="#4FC3F7" opacity="0.4"/>
+<rect x="125" y="30" width="80" height="170" rx="3" fill="#fff8f0" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="135" y="48" font-family="Caveat,cursive" font-size="11" fill="#1a1a1a">To Do:</text>
+<line x1="135" y1="58" x2="195" y2="58" stroke="#ccc" stroke-width="1"/><line x1="135" y1="72" x2="195" y2="72" stroke="#ccc" stroke-width="1"/><line x1="135" y1="86" x2="195" y2="86" stroke="#ccc" stroke-width="1"/><line x1="135" y1="100" x2="195" y2="100" stroke="#ccc" stroke-width="1"/><line x1="135" y1="114" x2="195" y2="114" stroke="#ccc" stroke-width="1"/><line x1="135" y1="128" x2="195" y2="128" stroke="#ccc" stroke-width="1"/><line x1="135" y1="142" x2="195" y2="142" stroke="#ccc" stroke-width="1"/><line x1="135" y1="156" x2="195" y2="156" stroke="#ccc" stroke-width="1"/><line x1="135" y1="170" x2="195" y2="170" stroke="#ccc" stroke-width="1"/><line x1="135" y1="184" x2="195" y2="184" stroke="#ccc" stroke-width="1"/>
+<path d="M133 55 l3 3 5-5" stroke="#4CAF50" stroke-width="2" fill="none"/><path d="M133 69 l3 3 5-5" stroke="#4CAF50" stroke-width="2" fill="none"/>
+<text x="120" y="222" font-family="Caveat,cursive" font-size="13" fill="#FF6B6B" text-anchor="middle">47 items. 2 done. 11 added.</text>
+</svg></div><div class="ic">Mom Math: The To-Do List</div></div>
 
-            <!-- CARD 3 -->
-            <div class="meme-card fade-up">
-                <div class="card-image">
-                    <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="30" y="140" width="220" height="80" rx="6" fill="none" stroke="#1a1a1a" stroke-width="2"/>
-                        <rect x="30" y="130" width="220" height="15" rx="3" fill="#FF6B6B" opacity="0.2" stroke="#1a1a1a" stroke-width="1.5"/>
-                        <ellipse cx="80" cy="130" rx="35" ry="10" fill="#f0f0f0" stroke="#1a1a1a" stroke-width="1.5"/>
-                        <circle cx="190" cy="115" r="12" fill="none" stroke="#1a1a1a" stroke-width="2"/>
-                        <circle cx="186" cy="112" r="1.5" fill="#1a1a1a"/><circle cx="194" cy="112" r="1.5" fill="#1a1a1a"/>
-                        <path d="M186 120 Q190 124 194 120" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
-                        <line x1="190" y1="127" x2="190" y2="145" stroke="#1a1a1a" stroke-width="2"/>
-                        <circle cx="80" cy="108" r="14" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
-                        <line x1="73" y1="105" x2="79" y2="105" stroke="#1a1a1a" stroke-width="2"/>
-                        <line x1="83" y1="105" x2="89" y2="105" stroke="#1a1a1a" stroke-width="2"/>
-                        <ellipse cx="80" cy="115" rx="3" ry="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
-                        <text x="55" y="85" font-family="Caveat, cursive" font-size="14" fill="#666" opacity="0.4">z</text>
-                        <text x="45" y="70" font-family="Caveat, cursive" font-size="18" fill="#666" opacity="0.3">z</text>
-                        <text x="35" y="52" font-family="Caveat, cursive" font-size="22" fill="#666" opacity="0.2">z</text>
-                        <rect x="100" y="135" width="30" height="22" rx="2" fill="#FF6B6B" opacity="0.3" stroke="#1a1a1a" stroke-width="1.5" transform="rotate(15, 115, 146)"/>
-                        <path d="M210 95 Q210 70 240 70 Q260 70 260 85 Q260 100 240 100 L215 100 L210 110 Z" fill="white" stroke="#1a1a1a" stroke-width="1.5"/>
-                        <text x="225" y="82" font-family="Caveat, cursive" font-size="10" fill="#1a1a1a" text-anchor="middle">Mom?</text>
-                        <text x="230" y="96" font-family="Caveat, cursive" font-size="10" fill="#1a1a1a" text-anchor="middle">...Mom?</text>
-                    </svg>
-                </div>
-                <div class="card-text">
-                    <span class="card-label good">Good Mom Moment</span>
-                    <!-- CHANGE THIS JOKE WEEKLY -->
-                    <p class="card-joke">Read bedtime stories every night. Fall asleep by page 2. Wake up at 2am with the book on my face.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- 3: Bedtime Stories -->
+<div class="gi" data-category="good"><div style="aspect-ratio:1;background:var(--lg);display:flex;align-items:center;justify-content:center;padding:.5rem">
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+<rect x="20" y="115" width="200" height="65" rx="5" fill="none" stroke="#1a1a1a" stroke-width="2"/><rect x="20" y="107" width="200" height="12" rx="3" fill="#FF6B6B" opacity="0.15" stroke="#1a1a1a" stroke-width="1.5"/>
+<ellipse cx="65" cy="107" rx="30" ry="8" fill="#f0f0f0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="65" cy="90" r="14" fill="none" stroke="#1a1a1a" stroke-width="2.5"/><line x1="58" y1="87" x2="64" y2="87" stroke="#1a1a1a" stroke-width="2"/><line x1="68" y1="87" x2="74" y2="87" stroke="#1a1a1a" stroke-width="2"/><ellipse cx="65" cy="97" rx="3" ry="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="42" y="70" font-family="Caveat,cursive" font-size="13" fill="#666" opacity="0.4">z</text><text x="32" y="55" font-family="Caveat,cursive" font-size="17" fill="#666" opacity="0.3">z</text><text x="24" y="38" font-family="Caveat,cursive" font-size="22" fill="#666" opacity="0.2">z</text>
+<rect x="88" y="110" width="25" height="18" rx="2" fill="#FF6B6B" opacity="0.25" stroke="#1a1a1a" stroke-width="1.5" transform="rotate(12,100,119)"/>
+<circle cx="170" cy="95" r="12" fill="none" stroke="#1a1a1a" stroke-width="2"/><circle cx="166" cy="92" r="1.5" fill="#1a1a1a"/><circle cx="174" cy="92" r="1.5" fill="#1a1a1a"/><path d="M166 100 Q170 104 174 100" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+<path d="M188 78 Q188 60 208 60 Q222 60 222 72 Q222 82 208 82 L192 82 L188 90 Z" fill="white" stroke="#1a1a1a" stroke-width="1.5"/><text x="200" y="70" font-family="Caveat,cursive" font-size="9" fill="#1a1a1a" text-anchor="middle">Mom?</text><text x="203" y="80" font-family="Caveat,cursive" font-size="9" fill="#1a1a1a" text-anchor="middle">...Mom?</text>
+<text x="120" y="210" font-family="Caveat,cursive" font-size="13" fill="#666" text-anchor="middle">Asleep by page 2. Every night.</text>
+</svg></div><div class="ic">Good Mom: Bedtime Stories</div></div>
 
-    <section class="section quiz-section" id="quiz">
-        <div class="quiz-box fade-up">
-            <div class="quiz-emoji">😈😇</div>
-            <h2>What % Good Mom Are You?</h2>
-            <p>5 questions. No judgment. Okay, a little judgment. Take the quiz and find out if you're more horns or halo today.</p>
-            <button class="quiz-btn" onclick="startQuiz()">Take the Quiz</button>
-        </div>
-    </section>
+<!-- 4: Diaper Bag -->
+<div class="gi" data-category="vs"><div style="aspect-ratio:1;background:var(--lg);display:flex;align-items:center;justify-content:center;padding:.5rem">
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+<text x="60" y="22" font-family="Caveat,cursive" font-size="14" fill="#2e7d32" text-anchor="middle" font-weight="700">Mom's bag</text>
+<rect x="20" y="30" width="80" height="100" rx="6" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+<text x="60" y="50" font-family="Caveat,cursive" font-size="9" fill="#666" text-anchor="middle">diapers x3</text>
+<text x="60" y="62" font-family="Caveat,cursive" font-size="9" fill="#666" text-anchor="middle">wipes</text>
+<text x="60" y="74" font-family="Caveat,cursive" font-size="9" fill="#666" text-anchor="middle">change of clothes</text>
+<text x="60" y="86" font-family="Caveat,cursive" font-size="9" fill="#666" text-anchor="middle">snacks x3</text>
+<text x="60" y="98" font-family="Caveat,cursive" font-size="9" fill="#666" text-anchor="middle">sunscreen</text>
+<text x="60" y="110" font-family="Caveat,cursive" font-size="9" fill="#666" text-anchor="middle">first aid kit</text>
+<text x="60" y="122" font-family="Caveat,cursive" font-size="9" fill="#666" text-anchor="middle">backup outfit</text>
+<text x="180" y="22" font-family="Caveat,cursive" font-size="14" fill="#E85555" text-anchor="middle" font-weight="700">Dad's bag</text>
+<rect x="140" y="30" width="80" height="100" rx="6" fill="#FFE0E0" stroke="#E85555" stroke-width="1.5"/>
+<rect x="165" y="60" width="18" height="28" rx="3" fill="none" stroke="#FF6B6B" stroke-width="2"/><rect x="169" y="65" width="10" height="18" rx="1" fill="#FF6B6B" opacity="0.2"/>
+<text x="180" y="105" font-family="Caveat,cursive" font-size="11" fill="#E85555" text-anchor="middle">that's it.</text>
+<text x="120" y="165" font-family="Caveat,cursive" font-size="16" fill="#1a1a1a" text-anchor="middle">"I thought YOU packed it"</text>
+<!-- Dad stick figure shrugging -->
+<circle cx="120" cy="195" r="12" fill="none" stroke="#1a1a1a" stroke-width="2"/><circle cx="116" cy="192" r="1.5" fill="#1a1a1a"/><circle cx="124" cy="192" r="1.5" fill="#1a1a1a"/><path d="M116 201 Q120 198 124 201" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="120" y1="207" x2="120" y2="230" stroke="#1a1a1a" stroke-width="2"/><line x1="120" y1="215" x2="100" y2="208" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/><line x1="120" y1="215" x2="140" y2="208" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
+</svg></div><div class="ic">Mom vs Dad: Diaper Bag</div></div>
 
-    <section class="section" id="about">
-        <div class="about-section fade-up">
-            <h2 class="section-title" style="margin-bottom: 1.5rem;">About This Chaos</h2>
-            <p class="about-text">
-                Hi. I'm a stick figure. I have <span class="highlight">approximately 2.5 kids</span>, a coffee addiction that qualifies as a personality trait, and a house that's clean <span class="highlight">only when someone's coming over</span>.
-                <br><br>
-                I started drawing these because every parenting account was either "blessed mama" energy or rage-bait, and I just wanted someone to say: <span class="highlight">you're doing fine. Also, you're a disaster. Both things are true.</span>
-                <br><br>
-                So here we are. Stick figures. Bad jokes. Brutal honesty wrapped in a cartoon. If it makes you laugh — or just makes you feel less alone at 11pm while eating cereal over the sink — then I've done my job.
-                <br><br>
-                Tag a mom. Share a laugh. We're all in this together.
-            </p>
-        </div>
-    </section>
+<!-- 5: Target Run -->
+<div class="gi" data-category="math"><div style="aspect-ratio:1;background:var(--lg);display:flex;align-items:center;justify-content:center;padding:.5rem">
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+<circle cx="80" cy="55" r="14" fill="none" stroke="#1a1a1a" stroke-width="2.5"/><circle cx="75" cy="52" r="2" fill="#1a1a1a"/><circle cx="85" cy="52" r="2" fill="#1a1a1a"/><path d="M75 62 Q80 67 85 62" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
+<line x1="80" y1="69" x2="80" y2="120" stroke="#1a1a1a" stroke-width="2.5"/><line x1="80" y1="85" x2="55" y2="100" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><line x1="80" y1="85" x2="115" y2="80" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="80" y1="120" x2="62" y2="155" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><line x1="80" y1="120" x2="98" y2="155" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+<path d="M115 75 L122 75 L135 108 L178 108 L185 88 L128 88" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="140" cy="115" r="5" fill="none" stroke="#1a1a1a" stroke-width="2"/><circle cx="170" cy="115" r="5" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="132" y="90" width="12" height="14" rx="1" fill="#FF6B6B" opacity="0.3"/><rect x="148" y="88" width="14" height="16" rx="1" fill="#4FC3F7" opacity="0.3"/><rect x="140" y="82" width="16" height="8" rx="1" fill="#FFD700" opacity="0.3"/><circle cx="166" cy="95" r="6" fill="#4CAF50" opacity="0.2"/>
+<text x="120" y="180" font-family="Caveat,cursive" font-size="14" fill="#1a1a1a" text-anchor="middle">List: 3 items</text>
+<text x="120" y="198" font-family="Caveat,cursive" font-size="16" fill="#FF6B6B" text-anchor="middle" font-weight="700">Cart: 47 items</text>
+<text x="120" y="225" font-family="Caveat,cursive" font-size="12" fill="#999" text-anchor="middle">Budget: destroyed</text>
+</svg></div><div class="ic">Mom Math: Target Run</div></div>
 
-    <footer>
-        <div class="footer-logo"><span class="bad">Bad</span> Mom / Good Mom</div>
-        <p>Every mom is both. Every single day.</p>
-        <div class="footer-links">
-            <a href="https://www.instagram.com/thebadmomgoodmom/" target="_blank">Instagram</a>
-            <a href="https://www.tiktok.com/@thebadmomgoodmom" target="_blank">TikTok</a>
-            <a href="https://www.facebook.com/profile.php?id=61582152308141" target="_blank">Facebook</a>
-            <a href="https://www.youtube.com/channel/UCWQyuY7a8gg6KCaP0tCnv4Q" target="_blank">YouTube</a>
-        </div>
-        <p style="margin-top: 2rem; font-size: 0.75rem;">&copy; 2026 Bad Mom / Good Mom. All rights reserved.</p>
-    </footer>
+<!-- 6: Never Do Checklist -->
+<div class="gi" data-category="bad"><div style="aspect-ratio:1;background:var(--lg);display:flex;align-items:center;justify-content:center;padding:.5rem">
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+<text x="120" y="25" font-family="Caveat,cursive" font-size="15" fill="#1a1a1a" text-anchor="middle" font-weight="700">Things I said I'd never do</text>
+<rect x="30" y="35" width="180" height="160" rx="8" fill="white" stroke="#eee" stroke-width="1.5"/>
+<text x="50" y="58" font-family="Caveat,cursive" font-size="12" fill="#666">Bribe with candy</text><text x="190" y="58" font-family="Caveat,cursive" font-size="12" fill="#FF6B6B" text-anchor="end">&#x2713; daily</text>
+<text x="50" y="78" font-family="Caveat,cursive" font-size="12" fill="#666">TV as babysitter</text><text x="190" y="78" font-family="Caveat,cursive" font-size="12" fill="#FF6B6B" text-anchor="end">&#x2713; Bluey</text>
+<text x="50" y="98" font-family="Caveat,cursive" font-size="12" fill="#666">"Because I said so"</text><text x="190" y="98" font-family="Caveat,cursive" font-size="12" fill="#FF6B6B" text-anchor="end">&#x2713; daily</text>
+<text x="50" y="118" font-family="Caveat,cursive" font-size="12" fill="#666">Count to three</text><text x="190" y="118" font-family="Caveat,cursive" font-size="12" fill="#FF6B6B" text-anchor="end">&#x2713; 2.5</text>
+<text x="50" y="138" font-family="Caveat,cursive" font-size="12" fill="#666">Chicken nuggets</text><text x="190" y="138" font-family="Caveat,cursive" font-size="12" fill="#FF6B6B" text-anchor="end">&#x2713; 4x/week</text>
+<text x="50" y="158" font-family="Caveat,cursive" font-size="12" fill="#666">Floor food</text><text x="190" y="158" font-family="Caveat,cursive" font-size="12" fill="#FF6B6B" text-anchor="end">&#x2713; 5 sec rule</text>
+<text x="50" y="178" font-family="Caveat,cursive" font-size="12" fill="#666">Become my mother</text><text x="190" y="178" font-family="Caveat,cursive" font-size="12" fill="#FF6B6B" text-anchor="end">&#x2713; I AM her</text>
+<rect x="50" y="200" width="140" height="28" rx="14" fill="#FFE0E0"/>
+<text x="120" y="219" font-family="Caveat,cursive" font-size="14" fill="#E85555" text-anchor="middle" font-weight="700">Score: 7/7</text>
+</svg></div><div class="ic">Bad Mom: The Checklist</div></div>
 
-    <div class="quiz-modal-overlay" id="quizOverlay">
-        <div class="quiz-modal" id="quizModal">
-            <button class="quiz-close" onclick="closeQuiz()">&times;</button>
-            <div id="quizContent"></div>
-        </div>
-    </div>
+<!-- 7: Sick Day -->
+<div class="gi" data-category="vs"><div style="aspect-ratio:1;background:var(--lg);display:flex;align-items:center;justify-content:center;padding:.5rem">
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+<text x="65" y="20" font-family="Caveat,cursive" font-size="13" fill="#2e7d32" text-anchor="middle" font-weight="700">Mom sick</text>
+<circle cx="65" cy="50" r="14" fill="none" stroke="#1a1a1a" stroke-width="2.5"/><line x1="58" y1="47" x2="64" y2="47" stroke="#1a1a1a" stroke-width="2"/><line x1="66" y1="47" x2="72" y2="47" stroke="#1a1a1a" stroke-width="2"/><path d="M58 57 Q65 54 72 57" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="65" y1="64" x2="65" y2="105" stroke="#1a1a1a" stroke-width="2.5"/><line x1="65" y1="78" x2="42" y2="88" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><line x1="65" y1="78" x2="88" y2="88" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="28" y="82" width="16" height="12" rx="2" fill="#FF6B6B" opacity="0.3"/><rect x="82" y="80" width="18" height="14" rx="2" fill="#4FC3F7" opacity="0.3"/>
+<line x1="65" y1="105" x2="50" y2="135" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><line x1="65" y1="105" x2="80" y2="135" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+<text x="65" y="155" font-family="Caveat,cursive" font-size="10" fill="#666" text-anchor="middle">still cooking. still cleaning.</text>
+<text x="175" y="20" font-family="Caveat,cursive" font-size="13" fill="#E85555" text-anchor="middle" font-weight="700">Dad sick</text>
+<rect x="135" y="55" width="80" height="50" rx="4" fill="none" stroke="#1a1a1a" stroke-width="2"/><rect x="135" y="48" width="80" height="10" rx="3" fill="#E3F2FD" opacity="0.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<ellipse cx="160" cy="48" rx="18" ry="5" fill="#f0f0f0" stroke="#1a1a1a" stroke-width="1"/>
+<circle cx="160" cy="38" r="12" fill="none" stroke="#1a1a1a" stroke-width="2"/><line x1="154" y1="36" x2="160" y2="36" stroke="#1a1a1a" stroke-width="1.5"/><line x1="162" y1="36" x2="168" y2="36" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="140" y="28" font-family="Caveat,cursive" font-size="10" fill="#666" opacity="0.3">z</text><text x="133" y="18" font-family="Caveat,cursive" font-size="14" fill="#666" opacity="0.2">z</text>
+<text x="175" y="85" font-family="Caveat,cursive" font-size="10" fill="#E85555" text-anchor="middle">has written his will</text>
+<text x="120" y="195" font-family="Caveat,cursive" font-size="14" fill="#1a1a1a" text-anchor="middle" font-weight="700">It's a cold.</text>
+<text x="120" y="215" font-family="Caveat,cursive" font-size="14" fill="#FF6B6B" text-anchor="middle">He'll survive. Probably.</text>
+</svg></div><div class="ic">Mom vs Dad: Sick Day</div></div>
 
-    <script>
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+<!-- 8: Coffee -->
+<div class="gi" data-category="bad"><div style="aspect-ratio:1;background:var(--lg);display:flex;align-items:center;justify-content:center;padding:.5rem">
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+<text x="120" y="25" font-family="Caveat,cursive" font-size="16" fill="#1a1a1a" text-anchor="middle" font-weight="700">Coffee Status</text>
+<!-- Big coffee cup center -->
+<rect x="75" y="55" width="90" height="95" rx="8" fill="none" stroke="#1a1a1a" stroke-width="3"/><path d="M165 75 Q190 75 190 100 Q190 125 165 125" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
+<rect x="82" y="62" width="76" height="40" rx="4" fill="#8B4513" opacity="0.15"/>
+<path d="M90 50 Q100 35 110 50" fill="none" stroke="#999" stroke-width="2" opacity="0.3"/><path d="M110 48 Q120 32 130 48" fill="none" stroke="#999" stroke-width="2" opacity="0.25"/><path d="M130 50 Q140 36 150 50" fill="none" stroke="#999" stroke-width="2" opacity="0.2"/>
+<text x="120" y="95" font-family="Caveat,cursive" font-size="12" fill="#8B4513" text-anchor="middle">reheated</text>
+<text x="120" y="112" font-family="Caveat,cursive" font-size="12" fill="#8B4513" text-anchor="middle">3 times</text>
+<text x="120" y="135" font-family="Caveat,cursive" font-size="12" fill="#FF6B6B" text-anchor="middle">still cold</text>
+<!-- Timeline -->
+<text x="120" y="175" font-family="Caveat,cursive" font-size="12" fill="#666" text-anchor="middle">6am: made it. 7:30: found it. 9am: reheated.</text>
+<text x="120" y="195" font-family="Caveat,cursive" font-size="12" fill="#666" text-anchor="middle">9:02: someone spilled it. 2pm: drank cold.</text>
+<text x="120" y="225" font-family="Caveat,cursive" font-size="16" fill="#FF6B6B" text-anchor="middle" font-weight="700">Out of spite.</text>
+</svg></div><div class="ic">Bad Mom: Coffee Status</div></div>
 
-        const questions = [
-            { q: "It's 5:30pm and you haven't thought about dinner. You:", options: [
-                { text: "Whip up a balanced meal from whatever's in the fridge", score: 2 },
-                { text: "Frozen nuggets + fruit = a food group, right?", score: 0 },
-                { text: "Order delivery and plate it on real dishes so it looks homemade", score: 1 },
-                { text: "Cereal. Cereal is dinner now.", score: 0 }
-            ]},
-            { q: "Your kid's school project is due tomorrow. You:", options: [
-                { text: "Already helped them finish it last weekend", score: 2 },
-                { text: "Hot glue gun at midnight. We've done this before.", score: 0 },
-                { text: "Gently remind them and offer to help", score: 1 },
-                { text: "Discover this information at 7am the next morning", score: 0 }
-            ]},
-            { q: "Screen time today has been:", options: [
-                { text: "30 minutes of educational content", score: 2 },
-                { text: "Honestly? I lost count after hour two.", score: 0 },
-                { text: "A healthy mix of Bluey and outdoor play", score: 1 },
-                { text: "Enough that the tablet needs charging. Again.", score: 0 }
-            ]},
-            { q: "When another mom asks how you're doing, you say:", options: [
-                { text: "\"We're thriving! Soccer practice, meal prep, family devotionals!\"", score: 2 },
-                { text: "\"I found a French fry in my hair today.\"", score: 0 },
-                { text: "\"Good! Tired, but good.\" (the universal mom answer)", score: 1 },
-                { text: "Just a long exhale and a knowing look", score: 0 }
-            ]},
-            { q: "Bedtime routine tonight:", options: [
-                { text: "Bath, books, prayers, tuck-in, lights out by 8", score: 2 },
-                { text: "\"Brush your teeth and get in bed\" shouted from the couch", score: 0 },
-                { text: "Stories and snuggles (only 3 extra drinks of water)", score: 1 },
-                { text: "They fell asleep on the couch and I'm NOT moving them", score: 0 }
-            ]}
-        ];
-        let currentQ = 0, score = 0;
+<!-- 9: Bedtime Math -->
+<div class="gi" data-category="math"><div style="aspect-ratio:1;background:var(--lg);display:flex;align-items:center;justify-content:center;padding:.5rem">
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+<text x="120" y="22" font-family="Caveat,cursive" font-size="15" fill="#1a1a1a" text-anchor="middle" font-weight="700">Bedtime Math</text>
+<!-- Clock -->
+<circle cx="120" cy="70" r="30" fill="none" stroke="#1a1a1a" stroke-width="2.5"/><line x1="120" y1="70" x2="120" y2="48" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/><line x1="120" y1="70" x2="140" y2="75" stroke="#FF6B6B" stroke-width="2" stroke-linecap="round"/><circle cx="120" cy="70" r="2" fill="#1a1a1a"/>
+<text x="120" y="120" font-family="Caveat,cursive" font-size="11" fill="#666" text-anchor="middle">+ 1 more story</text>
+<text x="120" y="136" font-family="Caveat,cursive" font-size="11" fill="#666" text-anchor="middle">+ 1 more water</text>
+<text x="120" y="152" font-family="Caveat,cursive" font-size="11" fill="#666" text-anchor="middle">+ 1 more hug</text>
+<text x="120" y="168" font-family="Caveat,cursive" font-size="11" fill="#666" text-anchor="middle">+ "I have to tell you something"</text>
+<text x="120" y="184" font-family="Caveat,cursive" font-size="11" fill="#666" text-anchor="middle">+ bathroom trip #4</text>
+<line x1="60" y1="195" x2="180" y2="195" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="120" y="215" font-family="Caveat,cursive" font-size="13" fill="#1a1a1a" text-anchor="middle">Announced: 8:00 PM</text>
+<text x="120" y="233" font-family="Caveat,cursive" font-size="15" fill="#FF6B6B" text-anchor="middle" font-weight="700">Actual: 10:14 PM</text>
+</svg></div><div class="ic">Mom Math: Bedtime</div></div>
 
-        function startQuiz() { currentQ = 0; score = 0; document.getElementById('quizOverlay').classList.add('active'); renderQuestion(); }
-        function closeQuiz() { document.getElementById('quizOverlay').classList.remove('active'); }
-        function renderQuestion() {
-            const q = questions[currentQ];
-            let html = `<p class="quiz-progress">Question ${currentQ+1} of ${questions.length}</p><p class="quiz-question">${q.q}</p>`;
-            q.options.forEach(opt => { html += `<button class="quiz-option" onclick="selectAnswer(${opt.score})">${opt.text}</button>`; });
-            document.getElementById('quizContent').innerHTML = html;
-        }
-        function selectAnswer(s) { score += s; currentQ++; if (currentQ < questions.length) renderQuestion(); else showResult(); }
-        function showResult() {
-            const pct = Math.round((score / (questions.length * 2)) * 100);
-            let title, desc;
-            if (pct >= 80) { title = "Mostly Good Mom"; desc = "Pinterest would be proud. But we both know you've hidden in the bathroom to eat chocolate at least once this week."; }
-            else if (pct >= 50) { title = "Perfectly Balanced Mom"; desc = "Some days Pinterest mom, some days survival mom. You're literally the most relatable person on this website."; }
-            else if (pct >= 20) { title = "Gloriously Bad Mom"; desc = "Cereal for dinner. Screen time as a coping mechanism. You're keeping everyone alive and that IS the job. Legend."; }
-            else { title = "Chaotically Iconic Mom"; desc = "You've transcended the good/bad spectrum entirely. Your kids are fed, alive, and loved. Everything else is details."; }
-            document.getElementById('quizContent').innerHTML = `<div class="quiz-result">
-                <p class="result-pct">${pct}%</p><p class="result-title">${title}</p><p class="result-desc">${desc}</p>
-                <p style="font-size:0.9rem;color:#666;margin-bottom:1rem;">Share your result!</p>
-                <button class="share-btn" onclick="shareResult('${pct}','${title}')">Copy Result</button>
-                <button class="share-btn" onclick="closeQuiz()">Done</button></div>`;
-        }
-        function shareResult(pct, title) {
-            const text = `I'm ${pct}% Good Mom — "${title}" Take the quiz: badmomgoodmom.com #BadMomGoodMom`;
-            if (navigator.share) navigator.share({ text });
-            else navigator.clipboard.writeText(text).then(() => alert('Copied! Now paste it everywhere.'));
-        }
-        document.getElementById('quizOverlay').addEventListener('click', function(e) { if (e.target === this) closeQuiz(); });
-    </script>
-</body>
-</html>
+<!-- 10: Dinner Edition -->
+<div class="gi" data-category="vs"><div style="aspect-ratio:1;background:var(--lg);display:flex;align-items:center;justify-content:center;padding:.5rem">
+<svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+<text x="60" y="20" font-family="Caveat,cursive" font-size="13" fill="#2e7d32" text-anchor="middle" font-weight="700">Mom's dinner</text>
+<ellipse cx="60" cy="75" rx="45" ry="16" fill="#f8f7f5" stroke="#1a1a1a" stroke-width="1.5"/>
+<ellipse cx="45" cy="70" rx="15" ry="8" fill="#8B4513" opacity="0.5"/><ellipse cx="75" cy="68" rx="10" ry="6" fill="#4CAF50" opacity="0.3"/><rect x="42" y="78" width="8" height="6" rx="1" fill="#FF9800" opacity="0.4"/><rect x="55" y="79" width="6" height="5" rx="1" fill="#F44336" opacity="0.3"/>
+<text x="60" y="105" font-family="Caveat,cursive" font-size="10" fill="#2e7d32" text-anchor="middle">steak, salad, veggies</text>
+<text x="180" y="20" font-family="Caveat,cursive" font-size="13" fill="#E85555" text-anchor="middle" font-weight="700">Dad's dinner</text>
+<ellipse cx="180" cy="75" rx="40" ry="14" fill="#f5f5f5" stroke="#ddd" stroke-width="1.5"/>
+<ellipse cx="180" cy="72" rx="22" ry="9" fill="#FFB74D" opacity="0.6"/>
+<text x="180" y="105" font-family="Caveat,cursive" font-size="10" fill="#E85555" text-anchor="middle">box mac & cheese</text>
+<line x1="120" y1="25" x2="120" y2="110" stroke="#eee" stroke-width="1.5"/>
+<text x="60" y="145" font-family="Caveat,cursive" font-size="13" fill="#666" text-anchor="middle">Time: 90 min</text>
+<text x="180" y="145" font-family="Caveat,cursive" font-size="13" fill="#666" text-anchor="middle">Time: 11 min</text>
+<text x="60" y="165" font-family="Caveat,cursive" font-size="13" fill="#2e7d32" text-anchor="middle">Kids ate: none</text>
+<text x="180" y="165" font-family="Caveat,cursive" font-size="13" fill="#E85555" text-anchor="middle">Kids ate: ALL of it</text>
+<rect x="30" y="185" width="180" height="35" rx="12" fill="#FFE0E0"/>
+<text x="120" y="207" font-family="Caveat,cursive" font-size="16" fill="#E85555" text-anchor="middle" font-weight="700">Life isn't fair.</text>
+</svg></div><div class="ic">Mom vs Dad: Dinner Edition</div></div>
+
+</div></section></div>
+
+<div class="page" id="page-videos">
+<section class="sec" style="padding-top:100px">
+<h2 class="st">Videos</h2><p class="ss">Stick figure animations that hit too close to home.</p>
+<div class="vg">
+
+<!-- ADD NEW VIDEOS HERE. Copy this block: -->
+<div class="vc"><a href="https://www.youtube.com/channel/UCWQyuY7a8gg6KCaP0tCnv4Q" target="_blank"><div class="vt" style="background:linear-gradient(135deg,#FFE0E0,#fff8f0)"><div style="text-align:center;padding:20px"><p style="font-family:var(--hf);font-size:1.5rem;color:#1a1a1a">Mom vs Dad:<br>Bedtime Story Edition</p></div><div class="po"></div></div></a><div class="ci"><p class="cti">Mom vs Dad: Bedtime Story Edition</p><p class="cde">Mom: 3 books, 7 voices, 45 min. Dad: "There was a girl. The end."</p></div></div>
+
+<div class="vc"><a href="https://www.youtube.com/channel/UCWQyuY7a8gg6KCaP0tCnv4Q" target="_blank"><div class="vt" style="background:linear-gradient(135deg,#e8f5e9,#fff8f0)"><div style="text-align:center;padding:20px"><p style="font-family:var(--hf);font-size:1.5rem;color:#1a1a1a">Mom's Dinner<br>vs Dad's Dinner</p></div><div class="po"></div></div></a><div class="ci"><p class="cti">Mom's Dinner vs Dad's Dinner</p><p class="cde">90 min cooking vs Kraft Mac & Cheese. Kids ate all of dad's.</p></div></div>
+
+<div class="vc"><a href="https://www.youtube.com/channel/UCWQyuY7a8gg6KCaP0tCnv4Q" target="_blank"><div class="vt" style="background:linear-gradient(135deg,#e3f2fd,#fff8f0)"><div style="text-align:center;padding:20px"><p style="font-family:var(--hf);font-size:1.5rem;color:#1a1a1a">Mom's Morning<br>vs Dad's Morning</p></div><div class="po"></div></div></a><div class="ci"><p class="cti">Mom's Morning vs Dad's Morning</p><p class="cde">Mom: up at 5:45. Dad: 4 snooze buttons and pure panic.</p></div></div>
+
+</div></section></div>
+
+<footer>
+<div class="fl"><span class="bad">Bad</span> Mom / Good Mom</div>
+<p>Every mom is both. Every single day.</p>
+<div class="flinks">
+<a href="https://www.instagram.com/thebadmomgoodmom/" target="_blank">Instagram</a>
+<a href="https://www.tiktok.com/@thebadmomgoodmom" target="_blank">TikTok</a>
+<a href="https://www.facebook.com/profile.php?id=61582152308141" target="_blank">Facebook</a>
+<a href="https://www.youtube.com/channel/UCWQyuY7a8gg6KCaP0tCnv4Q" target="_blank">YouTube</a>
+</div>
+<p style="margin-top:2rem;font-size:.75rem">&copy; 2026 Bad Mom / Good Mom</p>
+</footer>
+
+<div class="qmo" id="quizOverlay"><div class="qm"><button class="qcl" onclick="closeQuiz()">&times;</button><div id="quizContent"></div></div></div>
+
+<script>
+function showPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));var n=document.getElementById('nav-'+p);if(n)n.classList.add('active');window.scrollTo(0,0);document.querySelector('.nav-links').classList.remove('open');}
+function filterMemes(c,btn){document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.gi').forEach(i=>{i.style.display=(c==='all'||i.dataset.category===c)?'':'none';});}
+const ob=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');});},{threshold:.1});document.querySelectorAll('.fu').forEach(el=>ob.observe(el));
+const qs=[{q:"It's 5:30pm and you haven't thought about dinner. You:",o:[{t:"Whip up a balanced meal",s:2},{t:"Frozen nuggets + fruit = a food group?",s:0},{t:"Order delivery, plate it on real dishes",s:1},{t:"Cereal. Cereal is dinner now.",s:0}]},{q:"Your kid's school project is due tomorrow. You:",o:[{t:"Already helped them finish it last weekend",s:2},{t:"Hot glue gun at midnight.",s:0},{t:"Gently remind them and offer to help",s:1},{t:"Discover this at 7am the next morning",s:0}]},{q:"Screen time today has been:",o:[{t:"30 minutes of educational content",s:2},{t:"Lost count after hour two.",s:0},{t:"A healthy mix of Bluey and outdoor play",s:1},{t:"Tablet needs charging. Again.",s:0}]},{q:"When another mom asks how you're doing:",o:[{t:"\"We're thriving!\"",s:2},{t:"\"Found a French fry in my hair.\"",s:0},{t:"\"Good! Tired, but good.\"",s:1},{t:"Just a long exhale",s:0}]},{q:"Bedtime routine tonight:",o:[{t:"Bath, books, prayers, lights out by 8",s:2},{t:"\"GET IN BED\" from the couch",s:0},{t:"Stories and 3 extra drinks of water",s:1},{t:"They fell asleep on the couch. NOT moving them.",s:0}]}];
+let cq=0,sc=0;
+function startQuiz(){cq=0;sc=0;document.getElementById('quizOverlay').classList.add('active');rq();}
+function closeQuiz(){document.getElementById('quizOverlay').classList.remove('active');}
+function rq(){let q=qs[cq],h='<p class="qp">Question '+(cq+1)+' of '+qs.length+'</p><p class="qq">'+q.q+'</p>';q.o.forEach(o=>{h+='<button class="qo" onclick="sa('+o.s+')">'+o.t+'</button>';});document.getElementById('quizContent').innerHTML=h;}
+function sa(s){sc+=s;cq++;if(cq<qs.length)rq();else sr();}
+function sr(){let p=Math.round((sc/(qs.length*2))*100),ti,d;if(p>=80){ti="Mostly Good Mom";d="Pinterest proud. But you've hidden in the bathroom to eat chocolate.";}else if(p>=50){ti="Perfectly Balanced Mom";d="Some days Pinterest, some days survival. Most relatable person here.";}else if(p>=20){ti="Gloriously Bad Mom";d="Cereal for dinner. Screen time coping. Keeping everyone alive IS the job.";}else{ti="Chaotically Iconic Mom";d="Transcended the spectrum. Kids fed, alive, loved. Details are details.";}document.getElementById('quizContent').innerHTML='<div class="qr"><p class="rp">'+p+'%</p><p class="rti">'+ti+'</p><p class="rd">'+d+'</p><button class="sb" onclick="shr(\''+p+'\',\''+ti+'\')">Copy Result</button> <button class="sb" onclick="closeQuiz()">Done</button></div>';}
+function shr(p,t){let x="I\'m "+p+"% Good Mom - \""+t+"\" Take the quiz: badmomgoodmom.com #BadMomGoodMom";if(navigator.share)navigator.share({text:x});else navigator.clipboard.writeText(x).then(()=>alert('Copied!'));}
+document.getElementById('quizOverlay').addEventListener('click',function(e){if(e.target===this)closeQuiz();});
+</script>
+</body></html>
